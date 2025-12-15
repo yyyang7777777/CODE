@@ -1,0 +1,27 @@
+<script src="js/jquery-3.3.1.min.js"></script>
+<script>
+     function fnSend(){
+         var area;
+         //使用屬性選擇器取得欄位值
+         //將選項鈕name等於radArea被選取的欄位值指定給area
+         area = $("[name=radArea]:checked").val();
+         if (area == 0) {
+            alert("您居住在北部!");
+         } else if (area == 1) {
+             alert ("您居住在中部!");
+         } else if (area == 2) {
+             alert ("您居住在南部!");
+         } else {
+             alert ("您居住在東部!");
+         }
+     }
+</script>
+</head>
+<body>
+<p>居住區域:</p>
+<input type="radio" name="radArea" value="0" checked />北部
+<input type="radio" name="radArea" value="1" />中部
+<input type="radio" name="radArea" value="2" />南部
+<input type="radio" name="radArea" value="3" />東部
+<p><input type="button" onclick="fnSend()" value="送出"></p>
+</body>
