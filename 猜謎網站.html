@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>這些冷知識，你答得對嗎？</title>
+    <style>
+        /* CSS 樣式 */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            width: 90%;
+            max-width: 600px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .quiz-box {
+            border: 2px solid #ccc;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        #question-text {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            min-height: 50px; 
+        }
+        #answer-input {
+            padding: 10px;
+            width: calc(100% - 22px);
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        #submit-btn {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        #submit-btn:hover {
+            background-color: #45a049;
+        }
+        #result-feedback {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            display: none; 
+            transition: all 0.3s ease;
+        }
+        .correct {
+            background-color: #e6ffe6;
+            color: #008000;
+        }
+        .wrong {
+            background-color: #ffe6e6;
+            color: #cc0000;
+        }
+        .symbol {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+        .hint-text {
+            margin-top: 10px;
+            font-style: italic;
+            color: #888;
+        }
+        .next-btn {
+            display: none; 
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            float: right;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>這些冷知識，你答得對嗎？</h1>
+        
+        <div class="quiz-box">
+            <div id="question-number">第 1 題 / 100</div> 
+            <p id="question-text"></p>
+            
+            <input type="text" id="answer-input" placeholder="請輸入你的答案">
+            
+            <button id="submit-btn">送出答案</button>
+            <button class="next-btn" id="next-btn">下一題 →</button>
+
+            <div id="result-feedback">
+                <span class="symbol" id="feedback-symbol"></span>
+                <span id="feedback-text"></span>
+                <div class="hint-text" id="hint-display"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // JavaScript 邏輯
+        
+        // 謎題資料庫 (請在這裡擴展到 100 題！)
+        const quizData = [
+            {
+                question: "什麼東西有頭無頸，有身無足，你上床睡覺時它也和你一起上床？",
+                answer: "枕頭",
+                hint: "它軟軟的，放在你頭下。"
+            },
+            {
+                question: "什麼東西越洗越髒？",
+                answer: "水",
+                hint: "它本身很乾淨，但它用來洗...東西？"
+            },
+            {
+                question: "什麼時候太陽從西邊出來？",
+                answer: "錯的時候",
+                hint: "這是個語言陷阱，跟『不可能』相關。"
+            },
+        ];
+
+        // 遊戲狀態變數
+        let currentQuizIndex = 0;
+        const totalQuestions = quizData.length;
+        
+        // DOM 元素
+        const questionNumberEl = document.getElementById('question-number');
+        const questionTextEl = document.getElementById('question-text');
+        const answerInput = document.getElementById('answer-input');
+        const submitBtn = document.getElementById('submit-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const feedbackEl = document.getElementById('result-feedback');
+        const feedbackSymbolEl = document.getElementById('feedback-symbol');
+        const feedbackTextEl = document.getElementById('feedback-text');
+        const hintDisplayEl = document.getElementById('hint-display');
+
+        // 初始化遊戲
+        function loadQuiz() {
+            if (currentQuizIndex < totalQuestions) {
+                const currentQuiz = quizData[currentQuizIndex];
+                
+                // 更新 DOM
+                questionNumberEl.textContent = `第 ${currentQuizIndex + 1} 題 / ${totalQuestions}`;
+                questionTextEl.textContent = currentQuiz.question;
+                answerInput.value = ''; // 清空輸入框
+                
+                // 重設回饋區塊
+                feedbackEl.style.display = 'none';
+                feedbackEl.className = '';
+                hintDisplayEl.textContent = '';
+                
+                // 啟用輸入和提交按鈕，隱藏下一題
+                submitBtn.style.display = 'inline-block';
+                nextBtn.style.display = 'none';
+                answerInput.disabled = false;
+                answerInput.focus(); 
+            } else {
+                // 所有謎題都答完
+                questionNumberEl.textContent = `挑戰完成！`;
+                questionTextEl.textContent = `恭喜你完成所有 ${totalQuestions} 題冷知識挑戰！`;
+                
+                // 隱藏相關元素
+                answerInput.style.display = 'none';
+                submitBtn.style.display = 'none';
+                nextBtn.style.display = 'none';
+                feedbackEl.style.display = 'none';
+            }
+        }
+
+        // 檢查答案
+        function checkAnswer() {
+            const userAnswer = answerInput.value.trim().toLowerCase();
+            const currentQuiz = quizData[currentQuizIndex];
+            const correctAnswer = currentQuiz.answer.trim().toLowerCase(); 
+            const hint = currentQuiz.hint;
+            
+            // 顯示回饋區塊
+            feedbackEl.style.display = 'block';
+
+            if (userAnswer === correctAnswer) {
+                // 答對邏輯
+                feedbackEl.className = 'correct';
+                feedbackSymbolEl.textContent = '✅'; // 打勾符號
+                feedbackTextEl.textContent = '你真聰明！';
+                hintDisplayEl.textContent = ''; 
+                
+                // 答對後，禁用輸入和提交按鈕，顯示下一題按鈕
+                answerInput.disabled = true; 
+                submitBtn.style.display = 'none';
+                nextBtn.style.display = 'inline-block';
+                
+            } else {
+                // 答錯邏輯
+                feedbackEl.className = 'wrong';
+                feedbackSymbolEl.textContent = '❌'; // 叉叉符號
+                feedbackTextEl.textContent = '再接再厲！';
+                // 顯示提示
+                hintDisplayEl.textContent = `提示：${hint}`;
+                
+                // 答錯後，清空輸入框，讓使用者繼續嘗試
+                answerInput.value = '';
+                answerInput.focus(); 
+                answerInput.disabled = false; 
+                submitBtn.style.display = 'inline-block';
+                nextBtn.style.display = 'none';
+            }
+        }
+        
+        // 進入下一題
+        function nextQuiz() {
+            currentQuizIndex++;
+            loadQuiz();
+        }
+
+        // 事件監聽器
+        submitBtn.addEventListener('click', checkAnswer);
+        nextBtn.addEventListener('click', nextQuiz);
+        
+        // 允許按 Enter 鍵提交答案 (在輸入框未被禁用的情況下)
+        answerInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && answerInput.disabled === false) {
+                checkAnswer();
+            } else if (e.key === 'Enter' && answerInput.disabled === true) {
+                 // 如果答對了，按 Enter 等同於按下一題
+                 nextQuiz();
+            }
+        });
+
+        // 載入第一道謎題
+        loadQuiz();
+
+    </script>
+
+</body>
+</html>
