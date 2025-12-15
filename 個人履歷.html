@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>專業個人履歷表 - [您的姓名]</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* CSS 樣式 */
+
+        /* 顏色定義 (已修改為黃紫色系) */
+        :root {
+            --primary-color: #6A05A1; /* 深紫色 (Primary) */
+            --secondary-color: #FFD700; /* 亮黃色 (Accent/Secondary) */
+            --background-light: #F9F7FE; /* 淺紫灰背景 */
+            --text-dark: #333333;
+            --text-light: #FFFFFF;
+            --section-bg: #F8F8F8;
+        }
+
+        /* 基礎設定 */
+        body {
+            font-family: 'Noto Sans TC', 'Montserrat', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-light);
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+        }
+
+        /* 履歷容器 */
+        .resume-container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 30px auto;
+            background: var(--text-light);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            display: flex; 
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        /* 左側欄 (個人資訊/技能/聯繫方式) */
+        .sidebar {
+            width: 35%;
+            background-color: var(--primary-color); /* 深紫色背景 */
+            padding: 40px 30px;
+            color: var(--text-light);
+            box-sizing: border-box;
+        }
+
+        /* 右側主內容 (經歷/學歷/專案) */
+        .main-content {
+            width: 65%;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        /* 標題區塊 */
+        .header {
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5em;
+            margin: 0 0 5px 0;
+            color: var(--text-light);
+            border-bottom: 3px solid var(--secondary-color); /* 亮黃色線 */
+            padding-bottom: 5px;
+        }
+        .header h2 {
+            font-size: 1.2em;
+            font-weight: 400;
+            margin: 0;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        /* 區塊標題 */
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--primary-color); /* 深紫色文字 */
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 3px solid var(--secondary-color); /* 亮黃色線 */
+        }
+        .sidebar .section-title {
+             color: var(--secondary-color); /* 亮黃色文字 */
+             border-bottom-color: var(--text-light); /* 白色線 */
+        }
+        
+        /* 聯繫方式 */
+        .contact-info ul {
+            list-style: none;
+            padding: 0;
+        }
+        .contact-info ul li {
+            margin-bottom: 15px;
+            font-size: 0.95em;
+        }
+        .contact-info i {
+            margin-right: 10px;
+            color: var(--secondary-color); /* 亮黃色圖標 */
+        }
+
+        /* 技能列表 */
+        .skills-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .skill-tag {
+            background-color: var(--secondary-color); /* 亮黃色背景 */
+            color: var(--primary-color); /* 深紫色文字 */
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 700;
+            transition: transform 0.2s;
+        }
+        .skill-tag:hover {
+            transform: scale(1.05);
+        }
+        
+        /* 經歷與學歷項目 */
+        .item {
+            margin-bottom: 25px;
+            padding-left: 15px;
+            border-left: 3px solid var(--secondary-color); /* 亮黃色時間軸 */
+        }
+        .item h3 {
+            font-size: 1.1em;
+            margin: 0 0 5px 0;
+            color: var(--text-dark);
+        }
+        .item h4 {
+            font-size: 1em;
+            margin: 0 0 5px 0;
+            font-weight: 400;
+            color: #666;
+        }
+        .item span {
+            font-size: 0.9em;
+            color: var(--primary-color); /* 深紫色日期/期間 */
+            font-weight: 700;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .item ul {
+            padding-left: 20px;
+            margin: 5px 0;
+        }
+        .item ul li {
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+
+        /* 簡介區塊 (使用 Blockquote 增加視覺區隔) */
+        .summary p {
+            font-style: italic;
+            font-size: 1.1em;
+            border-left: 5px solid var(--primary-color); /* 深紫色邊框 */
+            padding-left: 15px;
+            margin-top: 15px;
+            color: #555;
+        }
+        
+        /* 項目符號顏色 */
+        .item ul li i.fas.fa-check-circle {
+             color: var(--secondary-color) !important; /* 強制設定為亮黃色 */
+        }
+
+
+        /* Footer for page break in print */
+        @media print {
+            body {
+                background: white;
+            }
+            .resume-container {
+                box-shadow: none;
+                margin: 0;
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="resume-container">
+        
+        <div class="sidebar">
+            <header class="header">
+                <h1>楊雯淇</h1>
+                <h2>金融技優一甲</h2>
+            </header>
+
+            <section class="contact-info">
+                <h3 class="section-title"><i class="fas fa-address-card"></i> 聯繫方式</h3>
+                <ul>
+                    <li><i class="fas fa-phone-alt"></i> 09*****763</li>
+                    <li><i class="fas fa-envelope"></i> c114138113@nkust.edu.tw</li>
+                    <li><i class="fas fa-map-marker-alt"></i> 高雄市，台灣</li>
+                    <li><i class="fab fa-linkedin"></i> linkedin.com/in/yourname</li>
+                    <li><i class="fab fa-github"></i> github.com/yourname</li>
+                </ul>
+            </section>
+
+            <section class="skills">
+                <h3 class="section-title"><i class="fas fa-tools"></i> 興趣愛好</h3>
+                <ul class="skills-list">
+                    <li class="skill-tag">音樂文化欣賞</li>
+                    <li class="skill-tag">影視文化欣賞</li>
+                    <li class="skill-tag">觀察娛樂產業</li>
+                    <li class="skill-tag">探索美食</li>
+                </ul>
+            </section>
+
+            <section class="languages">
+                <h3 class="section-title"><i class="fas fa-globe"></i> 語言能力</h3>
+                <ul>
+                    <li>中文：母語</li>
+                    <li>英文：努力提升中</li>
+                    <li>韓文：預計學習</li>
+                </ul>
+            </section>
+
+        </div>
+
+        <div class="main-content">
+
+            <section class="summary">
+                <h3 class="section-title">楊 7 7 個人簡介</h3>
+                <p>
+                    我不太擅長與不熟悉的人進行溝通，但在學校安排的報稅服務隊中，我親自協助民眾申請報稅。這段經歷讓我逐漸克服與人互動的緊張與恐懼，也在實際的接觸中感受到了滿滿的成就感與樂趣，同時也讓我提升了語言表達能力與解決問題的能力。
+                </p>
+            </section>
+
+            <section class="experience">
+                <h3 class="section-title">工作經歷</h3>
+                
+                <div class="item">
+                    <span>2025/05/08 – 2025/05/15</span>
+                    <h3>綜合所得稅申報志工</h3>
+                    <h4>財政部高雄國稅局</h4>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> 協助民眾申報稅務</li>
+                    <ul>
+                </div>
+
+                <div class="item">
+                    <span>2025/07/01 – 2025/08/31</span>
+                    <h3>帳務部人員</h3>
+                    <h4>會計師事務所</h4>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> 處理客戶日常的會計帳務</li>
+                        <li><i class="fas fa-check-circle"></i> 申報營業稅、營利事業所得稅、扣繳等稅務</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <section class="education">
+                <h3 class="section-title">學歷背景</h3>
+                
+                <div class="item">
+                    <span>2022/09 - 2025/06</span>
+                    <h3>國立鳳山商工</h3>
+                    <h4>會計事務科</h4>
+                </div>
+
+                <div class="item">
+                    <span>2025/09 - 現在</span>
+                    <h3>國立高雄科技大學</h3>
+                    <h4>金融系</h4>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+</body>
+</html>
